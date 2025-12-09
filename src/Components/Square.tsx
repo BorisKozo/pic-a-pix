@@ -1,4 +1,4 @@
-import type {FC} from "react";
+import type {CSSProperties, FC} from "react";
 import type {SquareMark} from "../BoardData.ts";
 
 export interface SquareProps {
@@ -56,8 +56,7 @@ const Square: FC<SquareProps> = ({mark, squareSize, boardSize, row, col, onClick
     const borderTop = `${topBorderFromRow(row)} ${BORDER_TYPE}`;
     const borderBottom = `${bottomBorderFromRow(row, boardSize)} ${BORDER_TYPE}`;
 
-
-    return <div style={{
+    const squareStyle: CSSProperties = {
         width: `${squareSize}px`,
         height: `${squareSize}px`,
         backgroundColor: bgColor,
@@ -67,10 +66,17 @@ const Square: FC<SquareProps> = ({mark, squareSize, boardSize, row, col, onClick
         borderBottom,
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
-    }} onClick={() => {
-        onClick(row, col);
-    }}>
+        justifyContent: 'center',
+        userSelect: 'none'
+    }
+    return <div style={squareStyle}
+                onMouseMove={(e) => {
+                    if (e.buttons === 1) {
+                        onClick(row, col);
+                    }
+                }}
+                onMouseDown={() => onClick(row, col)}
+    >
         {mark === 'X' &&
             <div style={{
                 fontSize: `${squareSize}px`
