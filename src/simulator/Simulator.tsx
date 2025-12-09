@@ -32,7 +32,7 @@ const Simulator: FC = () => {
                 }
             }}/>
         </section>
-        <Board squareSize={40} boardData={boardData.data} onChange={(row, col) => {
+        <Board squareSize={40} boardData={boardData.data} onClick={(row, col) => {
             boardData.data.setSquare(row, col, currentMark);
             setBoardData({data: boardData.data});
 

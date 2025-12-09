@@ -1,20 +1,15 @@
-import {type CSSProperties, type FC, useMemo} from "react";
+import {type CSSProperties, type FC, type PropsWithChildren} from "react";
 import {HorizontalClue} from "./HorizontalClue";
 import {VerticalClue} from "./VerticalClue";
-import type {BoardData} from "../BoardData.ts";
-import {Board} from "./Board.tsx";
+import type {IRowColumnClues} from "../BoardData.ts";
 
 export interface ICluesProps {
-    boardData: BoardData;
+    clues: IRowColumnClues;
     squareSize: number;
+    boardSize: number;
 }
 
-const BoardWithClues: FC<ICluesProps> = ({boardData, squareSize}) => {
-    const clues = useMemo(() => {
-        return boardData.getClues();
-    }, [boardData]);
-
-    console.log(clues);
+const CluesWrapper: FC<PropsWithChildren<ICluesProps>> = ({clues, squareSize,boardSize, children}) => {
     const containerStyle = {
         display: 'inline-block',
         position: 'relative' as const,
@@ -36,12 +31,12 @@ const BoardWithClues: FC<ICluesProps> = ({boardData, squareSize}) => {
         flexDirection: 'column',
         gap: `${squareSize - 26}px`,
         marginRight: '4px',
-        marginTop:'8px'
+        marginTop: '8px'
     };
 
     const boardPlaceholderStyle = {
-        width: `${boardData.getSize() * squareSize}px`,
-        height: `${boardData.getSize() * squareSize}px`,
+        width: `${boardSize * squareSize}px`,
+        height: `${boardSize * squareSize}px`,
     };
 
     return (
@@ -63,13 +58,11 @@ const BoardWithClues: FC<ICluesProps> = ({boardData, squareSize}) => {
 
                 {/* Placeholder for your Board component */}
                 <div style={boardPlaceholderStyle}>
-                    <Board boardData={boardData} squareSize={squareSize} onChange={() => {
-                        console.log('onChange')
-                    }}></Board>
+                    {children}
                 </div>
             </div>
         </div>
     );
 };
 
-export {BoardWithClues};
+export {CluesWrapper};

@@ -5,6 +5,11 @@ export type BoardPosition = [number, number, SquareMark];
 export type ClueNumberVector = number[];
 export type Clues = ClueNumberVector[];
 
+export interface IRowColumnClues {
+    rowClues: Clues;
+    columnClues: Clues;
+}
+
 export function SquareMarksToClueNumberVector(marks: SquareMark[]): ClueNumberVector {
     let counter = 0;
     const result: ClueNumberVector = [];
@@ -24,6 +29,7 @@ export function SquareMarksToClueNumberVector(marks: SquareMark[]): ClueNumberVe
     }
     return result;
 }
+
 
 export class BoardData {
     size: number;
@@ -91,7 +97,7 @@ export class BoardData {
         return true;
     }
 
-    getClues(): { rowClues: Clues; columnClues: Clues; } {
+    getClues(): IRowColumnClues {
         const rowClues: Clues = [];
         const columnClues: Clues = [];
         for (let i = 0; i < this.size; i++) {
