@@ -1,7 +1,7 @@
 import {type FC, useEffect, useState} from "react";
 import {MAX_BOARD_SIZE, MIN_BOARD_SIZE} from "../consts.ts";
-import {Board} from "../Components/Board.tsx";
-import {MarkSelector} from "../Components/MarkSelector.tsx";
+import {Board} from "../components/Board.tsx";
+import {MarkSelector} from "../components/MarkSelector.tsx";
 import {BoardData, type SquareMark} from "../BoardData.ts";
 
 const Simulator: FC = () => {
@@ -37,7 +37,7 @@ const Simulator: FC = () => {
             setBoardData({data: boardData.data});
 
         }}></Board>
-        <MarkSelector initialState={'black'} onChange={(mark) => {
+        <MarkSelector initialState={'black'} allowedMarks={['X', 'white', 'black']} onChange={(mark) => {
             setCurrentMark(mark);
         }}></MarkSelector>
         <section>

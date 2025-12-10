@@ -97,6 +97,18 @@ export class BoardData {
         return true;
     }
 
+    getTotalColored(): number {
+        let count = 0;
+        for (let i = 0; i < this.size; i++) {
+            for (let j = 0; j < this.size; j++) {
+                if (this.board[i][j] !== 'X' && this.board[i][j] !== 'white') {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
     getClues(): IRowColumnClues {
         const rowClues: Clues = [];
         const columnClues: Clues = [];

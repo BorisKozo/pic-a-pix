@@ -8,7 +8,8 @@ export interface SquareProps {
     row: number;
     col: number;
 
-    onClick(row: number, col: number): void
+    onClick(row: number, col: number): void;
+    onMove(row: number, col: number): void;
 }
 
 //border:  '1px solid black',
@@ -49,7 +50,7 @@ function bottomBorderFromRow(row: number, boardSize: number): string {
 }
 
 
-const Square: FC<SquareProps> = ({mark, squareSize, boardSize, row, col, onClick}) => {
+const Square: FC<SquareProps> = ({mark, squareSize, boardSize, row, col, onClick, onMove}) => {
     const bgColor = mark === 'black' ? 'black' : 'white';
     const borderLeft = `${leftBorderFromCol(col)} ${BORDER_TYPE}`;
     const borderRight = `${rightBorderFromCol(col, boardSize)} ${BORDER_TYPE}`;
@@ -72,7 +73,7 @@ const Square: FC<SquareProps> = ({mark, squareSize, boardSize, row, col, onClick
     return <div style={squareStyle}
                 onMouseMove={(e) => {
                     if (e.buttons === 1) {
-                        onClick(row, col);
+                        onMove(row, col);
                     }
                 }}
                 onMouseDown={() => onClick(row, col)}
