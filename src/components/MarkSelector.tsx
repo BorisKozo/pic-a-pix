@@ -28,8 +28,6 @@ const MarkSelector: FC<MarkSelectorProps> = ({onChange, initialState, allowedMar
                     {capitalize(mark)}
                 </label>))
             }
-
-            <p>Selected: {selected}</p>
         </div>
     );
 }

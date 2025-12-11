@@ -1,13 +1,13 @@
 import {type FC, useMemo, useState} from "react";
 import {BoardData, type SquareMark} from "../BoardData.ts";
-import type {ILevel} from "../db.ts";
+import type {ITestLevel} from "../db.ts";
 import {CluesWrapper} from "../components/CluesWrapper.tsx";
 import {Board} from "../components/Board.tsx";
 import {MarkSelector} from "../components/MarkSelector.tsx";
 import {autoX, isEmptyMark} from "../Board.utils.ts";
 
 export interface IGameProps {
-    level: ILevel;
+    level: ITestLevel;
 }
 
 const Game: FC<IGameProps> = ({level}) => {
@@ -34,7 +34,7 @@ const Game: FC<IGameProps> = ({level}) => {
         }
 
         if (!isEmptyMark(playBoard.data.getSquare(row, col))) {
-            autoX(playBoard.data, row, col, clues.rowClues[row], clues.columnClues[col]);
+            autoX(playBoard.data, row, col, clues.rowClues[row], clues.colClues[col]);
         }
         setPlayBoard({data: playBoard.data});
     };
@@ -43,7 +43,7 @@ const Game: FC<IGameProps> = ({level}) => {
         if (playBoard.data.getSquare(row, col) !== currentMoveMark) {
             playBoard.data.setSquare(row, col, currentMoveMark);
             if (!isEmptyMark(currentMoveMark)) {
-                autoX(playBoard.data, row, col, clues.rowClues[row], clues.columnClues[col]);
+                autoX(playBoard.data, row, col, clues.rowClues[row], clues.colClues[col]);
             }
             setPlayBoard({data: playBoard.data});
         }

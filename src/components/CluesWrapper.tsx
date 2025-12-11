@@ -43,7 +43,7 @@ const CluesWrapper: FC<PropsWithChildren<ICluesProps>> = ({clues, squareSize,boa
         <div style={containerStyle}>
             {/* Column clues at the top */}
             <div style={columnCluesContainerStyle}>
-                {clues.columnClues.map((clue, idx) => (
+                {clues.colClues.map((clue, idx) => (
                     <VerticalClue key={idx} numbers={clue}/>
                 ))}
             </div>

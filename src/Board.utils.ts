@@ -1,4 +1,4 @@
-import {BoardData, type ClueNumberVector, type SquareMark} from "./BoardData.ts";
+import {BoardData, type ClueNumberVector, type Clues, type SquareMark} from "./BoardData.ts";
 
 export function isEmptyMark(mark: SquareMark | undefined): boolean {
     return mark === 'X' || mark === 'white';
@@ -48,4 +48,10 @@ export function autoX(playBoard: BoardData, row: number, col: number, rowClue: C
             }
         }
     }
+}
+
+export function cluesToBoard(rowClues: Clues, colClues: Clues): BoardData {
+    const result = new BoardData(rowClues.length, []);
+
+    return result;
 }

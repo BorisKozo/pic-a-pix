@@ -1,13 +1,14 @@
 import './App.css'
 import {Game} from "./game/Game.tsx";
-import {Sun} from "./db.ts";
+import {House} from "./db.ts";
+// import {Simulator} from "./simulator/Simulator.tsx";
 
 function App() {
 
     return (
         <div>
-            {/*<Simulator></Simulator>*/}
-            <Game level={Sun}></Game>
+            <Game level={House}></Game>
+            {/*<Simulator level={House}></Simulator>*/}
         </div>
     )
 }

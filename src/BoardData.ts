@@ -7,7 +7,7 @@ export type Clues = ClueNumberVector[];
 
 export interface IRowColumnClues {
     rowClues: Clues;
-    columnClues: Clues;
+    colClues: Clues;
 }
 
 export function SquareMarksToClueNumberVector(marks: SquareMark[]): ClueNumberVector {
@@ -35,11 +35,11 @@ export class BoardData {
     size: number;
     board: SquareMark[][];
 
-    private getRow(row: number): SquareMark[] {
+    getRow(row: number): SquareMark[] {
         return [...this.board[row]];
     }
 
-    private getColumn(column: number): SquareMark[] {
+    getColumn(column: number): SquareMark[] {
         const result: SquareMark[] = [];
         for (let i = 0; i < this.size; i++) {
             result.push(this.board[i][column]);
@@ -121,7 +121,7 @@ export class BoardData {
 
         return {
             rowClues,
-            columnClues
+            colClues: columnClues
         }
     }
 
