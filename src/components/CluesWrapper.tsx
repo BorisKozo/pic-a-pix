@@ -6,10 +6,10 @@ import type {IRowColumnClues} from "../BoardData.ts";
 export interface ICluesProps {
     clues: IRowColumnClues;
     squareSize: number;
-    boardSize: number;
 }
 
-const CluesWrapper: FC<PropsWithChildren<ICluesProps>> = ({clues, squareSize,boardSize, children}) => {
+const CluesWrapper: FC<PropsWithChildren<ICluesProps>> = ({clues, squareSize, children}) => {
+    const boardSize = clues.rowClues.length;
     const containerStyle = {
         display: 'inline-block',
         position: 'relative' as const,

@@ -4,8 +4,8 @@ import type {BoardData} from "../BoardData.ts";
 
 export interface BoardProps {
     boardData: BoardData
-    onClick: (row: number, col: number) => void;
-    onMove: (row: number, col: number) => void;
+    onClick?: (row: number, col: number) => void;
+    onMove?: (row: number, col: number) => void;
     squareSize: number;
 }
 
@@ -31,10 +31,14 @@ const Board: FC<BoardProps> = ({boardData, onClick, onMove, squareSize}) => {
                     boardSize={size}
                     mark={boardData.getSquare(rowIndex, colIndex) ?? 'white'}
                     onClick={(row, col) => {
-                        onClick(row, col);
+                        if (onClick) {
+                            onClick(row, col);
+                        }
                     }}
                     onMove={(row, col) => {
-                        onMove(row, col);
+                        if (onMove) {
+                            onMove(row, col);
+                        }
                     }}
                 />
             ))
