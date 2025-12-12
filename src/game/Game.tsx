@@ -34,7 +34,7 @@ const Game: FC<IGameProps> = ({level}) => {
         }
 
         if (!isEmptyMark(playBoard.data.getSquare(row, col))) {
-            autoX(playBoard.data, row, col, clues.rowClues[row], clues.colClues[col]);
+            autoX(playBoard.data, row, col, clues);
         }
         setPlayBoard({data: playBoard.data});
     };
@@ -43,7 +43,7 @@ const Game: FC<IGameProps> = ({level}) => {
         if (playBoard.data.getSquare(row, col) !== currentMoveMark) {
             playBoard.data.setSquare(row, col, currentMoveMark);
             if (!isEmptyMark(currentMoveMark)) {
-                autoX(playBoard.data, row, col, clues.rowClues[row], clues.colClues[col]);
+                autoX(playBoard.data, row, col, clues);
             }
             setPlayBoard({data: playBoard.data});
         }
@@ -52,7 +52,7 @@ const Game: FC<IGameProps> = ({level}) => {
 
     return (<div>
         <h1>{level.name}</h1>
-        <CluesWrapper squareSize={40} clues={clues} boardSize={level.size}>
+        <CluesWrapper squareSize={40} clues={clues}>
             <Board boardData={playBoard.data} squareSize={40} onClick={onClickHandler} onMove={onMoveHandler}></Board>
         </CluesWrapper>
         <MarkSelector initialState={'black'} allowedMarks={['black', 'X']} onChange={(mark) => {
