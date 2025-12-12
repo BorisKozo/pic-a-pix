@@ -35,18 +35,6 @@ export class BoardData {
     size: number;
     board: SquareMark[][];
 
-    getRow(row: number): SquareMark[] {
-        return [...this.board[row]];
-    }
-
-    getColumn(column: number): SquareMark[] {
-        const result: SquareMark[] = [];
-        for (let i = 0; i < this.size; i++) {
-            result.push(this.board[i][column]);
-        }
-        return result;
-    }
-
     constructor(size: number, positions: BoardPosition[]) {
         this.board = [];
         this.size = size;
@@ -77,10 +65,48 @@ export class BoardData {
         return this.board[row][column];
     }
 
+    getRow(row: number): SquareMark[] {
+        return [...this.board[row]];
+    }
+
+    getCol(column: number): SquareMark[] {
+        const result: SquareMark[] = [];
+        for (let i = 0; i < this.size; i++) {
+            result.push(this.board[i][column]);
+        }
+        return result;
+    }
+
     setSquare(row: number, column: number, mark: SquareMark): void {
         if (row >= 0 && column >= 0 && row < this.size && column < this.size) {
             this.board[row][column] = mark;
         }
+    }
+
+    setRow(row: number, newRow: SquareMark[]): boolean {
+        let changed = false;
+        const existingRow = this.getRow(row);
+        for (let i = 0; i < this.size; i++) {
+            if (existingRow[i] !== newRow[i]) {
+                changed = true;
+                this.setSquare(row, i, newRow[i]);
+            }
+        }
+
+        return changed;
+    }
+
+    setCol(col: number, newCol: SquareMark[]): boolean {
+        let changed = false;
+        const existingCol = this.getCol(col);
+        for (let i = 0; i < this.size; i++) {
+            if (existingCol[i] !== newCol[i]) {
+                changed = true;
+                this.setSquare(i, col, newCol[i]);
+            }
+        }
+
+        return changed;
     }
 
     isEqual(otherBoard: BoardData): boolean {
@@ -116,7 +142,7 @@ export class BoardData {
             rowClues.push(SquareMarksToClueNumberVector(this.getRow(i)));
         }
         for (let i = 0; i < this.size; i++) {
-            columnClues.push(SquareMarksToClueNumberVector(this.getColumn(i)));
+            columnClues.push(SquareMarksToClueNumberVector(this.getCol(i)));
         }
 
         return {
