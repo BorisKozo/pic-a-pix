@@ -1,14 +1,4 @@
-import type {BoardPosition, IRowColumnClues} from "./BoardData.ts";
-
-export interface ILevel {
-    name: string;
-    size: number;
-    positions: BoardPosition[];
-}
-
-export interface ITestLevel extends ILevel {
-    clues: IRowColumnClues;
-}
+import type {ITestLevel} from "./levels.ts";
 
 export const Sun: ITestLevel = {
     name: "Sun",

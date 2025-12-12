@@ -5,6 +5,7 @@ import {createBrowserRouter} from "react-router";
 import {RouterProvider} from "react-router/dom";
 import {Game} from "./game/Game.tsx";
 import {Simulator} from "./simulator/Simulator.tsx";
+import {levels} from "./levels.ts";
 
 const router = createBrowserRouter([
     {
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
     },
     {
         path: '/solver',
-        element: <Solver clues={House.clues}></Solver>
+        element: <Solver clues={levels.hard1.clues}></Solver>
     }
 ]);
 
