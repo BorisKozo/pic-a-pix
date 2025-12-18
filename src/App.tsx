@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     },
     {
         path: '/solver',
-        element: <Solver clues={levels.hard1.clues}></Solver>
+        element: <Solver clues={levels.level632.clues}></Solver>
     }
 ]);
 

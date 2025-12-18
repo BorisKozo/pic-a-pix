@@ -162,4 +162,14 @@ export class BoardData {
         }
         return result;
     }
+
+    clone(): BoardData {
+        const result = new BoardData(this.size, []);
+        for (let i = 0; i < this.size; i++) {
+            for (let j = 0; j < this.size; j++) {
+                result.setSquare(i, j, this.getSquare(i, j)!);
+            }
+        }
+        return result;
+    }
 }

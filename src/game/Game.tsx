@@ -11,7 +11,8 @@ export interface IGameProps {
 }
 
 const Game: FC<IGameProps> = ({level}) => {
-    const [playBoard, setPlayBoard] = useState<{ data: BoardData }>({data: new BoardData(level.size, [])});
+    const [playBoard, setPlayBoard] = useState<BoardData>(new BoardData(level.size, []));
+    const [undoStack, setUndoStack] = useState<BoardData[]>([]);
     const [currentMark, setCurrentMark] = useState<SquareMark>('black');
     const [currentMoveMark, setCurrentMoveMark] = useState<SquareMark>('black');
 
@@ -25,27 +26,31 @@ const Game: FC<IGameProps> = ({level}) => {
 
 
     const onClickHandler = (row: number, col: number) => {
-        if (playBoard.data.getSquare(row, col) === currentMark) {
-            playBoard.data.setSquare(row, col, "white");
+        const newBoard = playBoard.clone();
+        if (playBoard.getSquare(row, col) === currentMark) {
+            newBoard.setSquare(row, col, "white");
             setCurrentMoveMark('white');
         } else {
-            playBoard.data.setSquare(row, col, currentMark);
+            newBoard.setSquare(row, col, currentMark);
             setCurrentMoveMark(currentMark);
         }
 
-        if (!isEmptyMark(playBoard.data.getSquare(row, col))) {
-            autoX(playBoard.data, row, col, clues);
+        if (!isEmptyMark(newBoard.getSquare(row, col))) {
+            autoX(newBoard, row, col, clues);
         }
-        setPlayBoard({data: playBoard.data});
+        setUndoStack([playBoard, ...undoStack]);
+        setPlayBoard(newBoard);
     };
 
     const onMoveHandler = (row: number, col: number) => {
-        if (playBoard.data.getSquare(row, col) !== currentMoveMark) {
-            playBoard.data.setSquare(row, col, currentMoveMark);
+        if (playBoard.getSquare(row, col) !== currentMoveMark) {
+            const newBoard = playBoard.clone();
+            newBoard.setSquare(row, col, currentMoveMark);
             if (!isEmptyMark(currentMoveMark)) {
-                autoX(playBoard.data, row, col, clues);
+                autoX(newBoard, row, col, clues);
             }
-            setPlayBoard({data: playBoard.data});
+            setUndoStack([playBoard, ...undoStack]);
+            setPlayBoard(newBoard);
         }
     };
 
@@ -53,11 +58,20 @@ const Game: FC<IGameProps> = ({level}) => {
     return (<div>
         <h1>{level.name}</h1>
         <CluesWrapper squareSize={40} clues={clues}>
-            <Board boardData={playBoard.data} squareSize={40} onClick={onClickHandler} onMove={onMoveHandler}></Board>
+            <Board boardData={playBoard} squareSize={40} onClick={onClickHandler} onMove={onMoveHandler}></Board>
         </CluesWrapper>
         <MarkSelector initialState={'black'} allowedMarks={['black', 'X']} onChange={(mark) => {
             setCurrentMark(mark);
         }}></MarkSelector>
+        <div>
+            {undoStack.length && <button onClick={() => {
+                if (undoStack.length > 0) {
+                    setPlayBoard(undoStack[0]);
+                    setUndoStack(undoStack.slice(1));
+                }
+            }}>Undo</button>}
+            Undo stack has {undoStack.length} items
+        </div>
     </div>);
 }
 
